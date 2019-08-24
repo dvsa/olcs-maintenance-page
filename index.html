@@ -145,7 +145,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 var setWelsh = function(){
       let cy = {
         "govuk-footer__copyright-logo":"Hawlfraint y Goron",
-        "govuk-footer__licence-description":"",
+        "govuk-footer__licence-description":"Mae'r holl gynnwys ar gael o dan y <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"license\" >Open Government Licence v3.0</a>, ac eithrio lle nodir yn wahanol",
         "govuk-header__link--service-name":"Trwyddedu Gweithredu Cerbydau",
         "govuk-phase-banner__text":"<a class=\"govuk-link\" href=\"http://www.smartsurvey.co.uk/s/VOLinpageOct2016/\">Beth oedd eich barn am y gwasanaeth hwn?</a> (yn cymryd 30 eiliad)"
       }
@@ -156,7 +156,6 @@ var setWelsh = function(){
         document.querySelector("."+k).innerHTML = cy[k];
       }
       var footerLink = document.querySelector(".govuk-footer__link")
-      document.querySelector(".govuk-footer__licence-logo").style="display:none;"
       footerLink.innerHTML = "English";
       footerLink.href="?lang=en";
 }
