@@ -266,6 +266,7 @@
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  width: 100vw;
 }
 
 @media screen {
@@ -3701,7 +3702,7 @@ only screen and (min-resolution: 2dppx) {
 
 .govuk-header__link--service-name {
   display: inline-block;
-  margin-top: 5px;
+  margin-bottom: 10px;
   font-family: "nta", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -3755,11 +3756,6 @@ only screen and (min-resolution: 2dppx) {
     float: left;
     vertical-align: top;
   }
-}
-
-/* GDS v5.10.0 */
-.govuk-logo-dot {
-  color: #00ffe0;
 }
 
 @media (min-width: 48.0625em) {
