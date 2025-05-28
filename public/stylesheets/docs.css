@@ -3552,9 +3552,9 @@ only screen and (min-resolution: 2dppx) {
   font-size: 14px;
   font-size: 0.875rem;
   line-height: 1.14286;
-  border-bottom: 10px solid #ffffff;
+  border-bottom: 1px solid transparent;
   color: #ffffff;
-  background: #0b0c0c;
+  background: #1d70b8;
 }
 
 @media print {
@@ -3591,7 +3591,6 @@ only screen and (min-resolution: 2dppx) {
   position: relative;
   margin-bottom: -10px;
   padding-top: 10px;
-  border-bottom: 10px solid #005ea5;
 }
 
 .govuk-header__container:after {
@@ -3702,7 +3701,7 @@ only screen and (min-resolution: 2dppx) {
 
 .govuk-header__link--service-name {
   display: inline-block;
-  margin-bottom: 10px;
+  margin-top: 5px;
   font-family: "nta", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -3756,6 +3755,11 @@ only screen and (min-resolution: 2dppx) {
     float: left;
     vertical-align: top;
   }
+}
+
+/* GDS v5.10.0 */
+.govuk-logo-dot {
+  color: #00ffe0;
 }
 
 @media (min-width: 48.0625em) {
