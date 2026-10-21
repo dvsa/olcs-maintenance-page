@@ -1,0 +1,12 @@
+{
+  "name": "olcs-maintenance-page",
+  "private": true,
+  "description": "VOL maintenance page, built as a single self-contained index.html",
+  "scripts": {
+    "build": "node build.cjs"
+  },
+  "devDependencies": {
+    "govuk-frontend": "^6.6.0",
+    "nunjucks": "^3.2.4"
+  }
+}
