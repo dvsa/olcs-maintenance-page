@@ -16,6 +16,13 @@
     <!-- GOV.UK Frontend {{ govukFrontendVersion }} (dist/govuk/govuk-frontend.min.css) with its fonts and crest inlined:
          this page is served alone, so it cannot load any other file -->
     <style>{{ css | safe }}</style>
+    <noscript>
+      <style>
+        /* The language switch needs JavaScript: without it, show the Welsh message under the English one and drop the switch */
+        main div[data-app-lang="cy"] { display: block; margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--govuk-border-colour); }
+        .govuk-footer__meta-item--grow > .govuk-visually-hidden, .govuk-footer__inline-list { display: none; }
+      </style>
+    </noscript>
 {% endblock %}
 
 {% block govukSkipLink %}
@@ -40,7 +47,7 @@
         <p class="govuk-body">You will be able to use the service later.</p>
         <p class="govuk-body">If you see this page outside of times previously advertised please contact {{ mailto | safe }}</p>
       </div>
-      <div data-app-lang="cy" hidden>
+      <div data-app-lang="cy" lang="cy" hidden>
         <h1 class="govuk-heading-xl">Gwasanaeth ddim ar gael</h1>
         <p class="govuk-body-l">Rydym yn cynnal gwaith cynnal a chadw a gwelliannau arferol.</p>
         <p class="govuk-body">Byddwch yn gallu defnyddio'r gwasanaeth yn nes ymlaen.</p>
@@ -53,6 +60,7 @@
 {% block govukFooter %}
   {{ govukFooter({
     meta: {
+      visuallyHiddenTitle: '<span data-app-lang="en">Support links</span><span data-app-lang="cy" hidden>Dolenni cymorth</span>' | safe,
       items: [
         {
           href: "?lang=cy",
@@ -66,7 +74,7 @@
       ]
     },
     contentLicence: {
-      html: '<span data-app-lang="en">All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</span><span data-app-lang="cy" hidden>Mae\'r holl gynnwys ar gael o dan y <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, ac eithrio lle nodir yn wahanol</span>'
+      html: '<span data-app-lang="en">All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</span><span data-app-lang="cy" hidden>Mae\'r holl gynnwys ar gael o dan y <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license" lang="en">Open Government Licence v3.0</a>, ac eithrio lle nodir yn wahanol</span>'
     },
     copyright: {
       html: '<span data-app-lang="en">© Crown copyright</span><span data-app-lang="cy" hidden>© Hawlfraint y Goron</span>'
@@ -88,6 +96,7 @@
 
       document.documentElement.lang = 'cy';
       document.title = 'Gwasanaeth ddim ar gael – Trwyddedu Gweithredu Cerbydau – GOV.UK';
+      document.querySelector('.govuk-service-navigation').setAttribute('aria-label', 'Gwybodaeth am y gwasanaeth');
       var parts = document.querySelectorAll('[data-app-lang]');
       for (var i = 0; i < parts.length; i++) {
         parts[i].hidden = parts[i].getAttribute('data-app-lang') !== 'cy';
