@@ -1,0 +1,101 @@
+{% extends "govuk/template.njk" %}
+
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
+{% set mailto %}<a class="govuk-link" href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a>{% endset %}
+
+{% block pageTitle %}Service unavailable – Vehicle Operator Licensing – GOV.UK{% endblock %}
+
+{% block headIcons %}
+    <link rel="icon" sizes="any" href="{{ faviconDataUri }}" type="image/svg+xml">
+{% endblock %}
+
+{% block head %}
+    <!-- GOV.UK Frontend {{ govukFrontendVersion }} (dist/govuk/govuk-frontend.min.css) with its fonts and crest inlined:
+         this page is served alone, so it cannot load any other file -->
+    <style>{{ css | safe }}</style>
+{% endblock %}
+
+{% block govukSkipLink %}
+  {{ govukSkipLink({
+    href: "#main-content",
+    html: '<span data-app-lang="en">Skip to main content</span><span data-app-lang="cy" hidden>Neidio i\'r prif gynnwys</span>'
+  }) }}
+{% endblock %}
+
+{% block govukServiceNavigation %}
+  {{ govukServiceNavigation({
+    serviceName: '<span data-app-lang="en">Vehicle Operator Licensing</span><span data-app-lang="cy" hidden>Trwyddedu Gweithredu Cerbydau</span>' | safe
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div data-app-lang="en">
+        <h1 class="govuk-heading-xl">Service unavailable</h1>
+        <p class="govuk-body-l">We are carrying out routine maintenance and improvements.</p>
+        <p class="govuk-body">You will be able to use the service later.</p>
+        <p class="govuk-body">If you see this page outside of times previously advertised please contact {{ mailto | safe }}</p>
+      </div>
+      <div data-app-lang="cy" hidden>
+        <h1 class="govuk-heading-xl">Gwasanaeth ddim ar gael</h1>
+        <p class="govuk-body-l">Rydym yn cynnal gwaith cynnal a chadw a gwelliannau arferol.</p>
+        <p class="govuk-body">Byddwch yn gallu defnyddio'r gwasanaeth yn nes ymlaen.</p>
+        <p class="govuk-body">Os gwelwch y dudalen hon y tu allan i weithiau a hysbysebwyd yn flaenorol, cysylltwch â {{ mailto | safe }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block govukFooter %}
+  {{ govukFooter({
+    meta: {
+      items: [
+        {
+          href: "?lang=cy",
+          text: "Cymraeg",
+          attributes: {
+            lang: "cy",
+            hreflang: "cy",
+            "data-app-lang-toggle": "true"
+          }
+        }
+      ]
+    },
+    contentLicence: {
+      html: '<span data-app-lang="en">All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</span><span data-app-lang="cy" hidden>Mae\'r holl gynnwys ar gael o dan y <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, ac eithrio lle nodir yn wahanol</span>'
+    },
+    copyright: {
+      html: '<span data-app-lang="en">© Crown copyright</span><span data-app-lang="cy" hidden>© Hawlfraint y Goron</span>'
+    }
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script>
+    (function () {
+      var lang = (window.location.search.match(/[?&]lang=(en|cy)\b/) || [])[1];
+      try {
+        lang = lang || sessionStorage.getItem('langPref');
+        sessionStorage.setItem('langPref', lang === 'cy' ? 'cy' : 'en');
+      } catch (e) {}
+      if (lang !== 'cy') {
+        return;
+      }
+
+      document.documentElement.lang = 'cy';
+      document.title = 'Gwasanaeth ddim ar gael – Trwyddedu Gweithredu Cerbydau – GOV.UK';
+      var parts = document.querySelectorAll('[data-app-lang]');
+      for (var i = 0; i < parts.length; i++) {
+        parts[i].hidden = parts[i].getAttribute('data-app-lang') !== 'cy';
+      }
+      var toggle = document.querySelector('[data-app-lang-toggle]');
+      toggle.textContent = 'English';
+      toggle.href = '?lang=en';
+      toggle.lang = toggle.hreflang = 'en';
+    })();
+  </script>
+{% endblock %}
