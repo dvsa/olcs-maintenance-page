@@ -30,7 +30,7 @@ npm run test:content
 npm run test:accessibility
 ```
 
-The tests use Node's built-in test runner, with jsdom to read the built page. They're in three suites, one directory each under `test/`, so CI can run each suite as its own check and show at a glance which one failed:
+The tests use Node's built-in test runner, with jsdom to read the built page. They're in three suites, one directory each under `test/`. On every pull request, GitHub Actions runs each suite as its own check (Test: Build, Test: Content, Test: Accessibility, from `.github/workflows/test.yaml`), so you can see at a glance which one failed:
 
 - **Build** (`test/build/`): the build inlines everything GOV.UK Frontend's CSS needs, and fails on anything it doesn't know how to inline; the committed `index.html` matches a fresh build of `src/`; the page makes no other requests and only links to fragments, https and mailto.
 - **Content** (`test/content/`): the translations are complete, with the same keys in both languages, nothing left untranslated, and HTML only where it's allowed; the page shows the copy from `translations.json` in English and Welsh, and no text that isn't from there.
