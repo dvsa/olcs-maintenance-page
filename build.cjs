@@ -54,6 +54,20 @@ const inlineCss = (css, readAsset = govukFile) => {
     return css;
 };
 
+/**
+ * Makes the t(lang, key) lookup the templates use, where key is a dotted path such as "footer.copyright".
+ * It throws on a missing language or key, so a typo fails the build instead of leaving a gap in the page.
+ */
+const createTranslator = (copy) => (lang, key) => {
+    // Only follow the copy's own properties, so "constructor" or "toString" can't resolve to something built in
+    const own = (node, name) => (node !== null && typeof node === 'object' && Object.hasOwn(node, name) ? node[name] : undefined);
+    const value = key.split('.').reduce(own, own(copy, lang));
+    if (typeof value !== 'string') {
+        throw new Error(`no ${lang} translation for ${key}`);
+    }
+    return value;
+};
+
 /** Renders the page as a string */
 const render = () => {
     const env = nunjucks.configure([path.join(__dirname, 'src'), govukDist], { autoescape: true, throwOnUndefined: true });
@@ -74,7 +88,7 @@ const build = (outFile = defaultOutFile) => {
     return html;
 };
 
-module.exports = { govukFile, replaceExactly, inlineCss, render, build, defaultOutFile };
+module.exports = { govukFile, replaceExactly, inlineCss, createTranslator, render, build, defaultOutFile };
 
 if (require.main === module) {
     const html = build();
