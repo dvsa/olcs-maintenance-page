@@ -16,6 +16,18 @@ npm ci
 npm run build
 ```
 
-Commit the rebuilt `index.html` with the template change. To move to a newer GOV.UK Frontend, update `govuk-frontend` in `package.json` and rebuild; the build fails if the CSS starts referencing an asset it doesn't know how to inline.
+Commit the rebuilt `index.html` with the template change, then run the tests:
+
+```bash
+npm test
+```
+
+The tests use Node's built-in test runner, with jsdom to read the built page. They check that:
+- the build inlines everything GOV.UK Frontend's CSS needs, and fails on anything it doesn't know how to inline;
+- the committed `index.html` matches a fresh build of `src/`;
+- the page makes no other requests and only links to fragments, https and mailto;
+- its content is there in English and Welsh.
+
+To move to a newer GOV.UK Frontend, update `govuk-frontend` in `package.json` and rebuild; the build fails if the CSS starts referencing an asset it doesn't know how to inline.
 
 Maintained by the VOL CI development team.
