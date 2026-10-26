@@ -1,6 +1,7 @@
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 
@@ -30,6 +31,11 @@
     href: "#main-content",
     html: '<span data-app-lang="en">Skip to main content</span><span data-app-lang="cy" hidden>Neidio i\'r prif gynnwys</span>'
   }) }}
+{% endblock %}
+
+{% block govukHeader %}
+  {# The header defaults to the protocol-relative //gov.uk; link to it over https explicitly #}
+  {{ govukHeader({ homepageUrl: "https://www.gov.uk" }) }}
 {% endblock %}
 
 {% block govukServiceNavigation %}

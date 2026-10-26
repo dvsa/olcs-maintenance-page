@@ -36,6 +36,17 @@ test('CSS only uses data: URIs and imports nothing', () => {
     }
 });
 
+test('links only to fragments, https and mailto', () => {
+    // A relative or protocol-relative link would go to the broken app, or over http on an http request
+    const knownExceptions = [
+        // The footer language toggle: replaced by a #cy fragment link when the switch moves to CSS
+        '?lang=cy',
+    ];
+    const bad = Array.from(document.querySelectorAll('a[href], area[href]'), (el) => el.getAttribute('href'))
+        .filter((href) => !/^(#|https:\/\/|mailto:)/.test(href) && !knownExceptions.includes(href));
+    assert.deepEqual(bad, []);
+});
+
 test('has no <base>, refresh, manifest, form or frame that could send a request', () => {
     assert.equal(document.querySelector('base, meta[http-equiv="refresh" i], link[rel="manifest"], form, iframe, frame'), null);
 });
