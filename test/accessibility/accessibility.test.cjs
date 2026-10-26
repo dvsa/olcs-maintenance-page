@@ -7,7 +7,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const axe = require('axe-core');
 const { VirtualConsole } = require('jsdom');
-const { loadPage } = require('./helpers/page.cjs');
+const { loadPage } = require('../helpers/page.cjs');
 
 // WCAG 2.2 AA means every Level A and AA success criterion from WCAG 2.0, 2.1 and 2.2. axe tags its rules by
 // the version and level that introduced them; it has no wcag22a tag, as none of 2.2's new A criteria can be

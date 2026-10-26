@@ -1,7 +1,7 @@
 // The t(lang, key) lookup the templates use to read src/data/translations.json
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { createTranslator } = require('../build.cjs');
+const { createTranslator } = require('../../build.cjs');
 
 const copy = { en: { a: 'A', b: { c: 'C' } } };
 

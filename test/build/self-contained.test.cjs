@@ -3,7 +3,7 @@
 // contain everything it needs.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { loadPage } = require('./helpers/page.cjs');
+const { loadPage } = require('../helpers/page.cjs');
 
 const { document } = loadPage().window;
 

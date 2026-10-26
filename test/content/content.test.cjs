@@ -3,9 +3,9 @@
 // so they hold however the language switch is built.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { html, loadPage, text, langOf } = require('./helpers/page.cjs');
-const translations = require('../src/data/translations.json');
-const { createTranslator } = require('../build.cjs');
+const { html, loadPage, text, langOf } = require('../helpers/page.cjs');
+const translations = require('../../src/data/translations.json');
+const { createTranslator } = require('../../build.cjs');
 
 const { document } = loadPage().window;
 const t = createTranslator(translations);

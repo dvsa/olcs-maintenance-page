@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { replaceExactly, inlineCss, govukFile, render, build, defaultOutFile } = require('../build.cjs');
+const { replaceExactly, inlineCss, govukFile, render, build, defaultOutFile } = require('../../build.cjs');
 
 /** Stands in for govuk-frontend's assets: each file's content is its own path, so the data URIs are predictable */
 const fakeAsset = (file) => Buffer.from(file);

@@ -2,8 +2,8 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { JSDOM } = require('jsdom');
-const translations = require('../src/data/translations.json');
-const { createTranslator } = require('../build.cjs');
+const translations = require('../../src/data/translations.json');
+const { createTranslator } = require('../../build.cjs');
 
 // The only keys whose copy is HTML, and so the only ones the template outputs unescaped
 const htmlKeys = ['footer.licenceDescription'];
