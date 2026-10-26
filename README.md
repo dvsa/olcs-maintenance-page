@@ -8,7 +8,12 @@ English and Welsh content are both in the page; the Cymraeg/English link in the 
 
 ### Changing the page
 
-Don't edit `index.html` by hand. Edit `src/index.njk` and rebuild. The build needs Node 26 (pinned in `.nvmrc`); `npm ci` refuses to run on any other major version:
+Don't edit `index.html` by hand. Edit the source and rebuild:
+
+- **Wording:** `src/data/translations.json`. Every string on the page is there, in English (`en`) and Welsh (`cy`), with the same keys in each. Only `footer.licenceDescription` may contain HTML.
+- **Layout:** `src/index.njk`. It extends GOV.UK Frontend's page template and looks all its copy up with `t(lang, key)`, so it has no text of its own. A missing key fails the build.
+
+The build needs Node 26 (pinned in `.nvmrc`); `npm ci` refuses to run on any other major version:
 
 ```bash
 nvm use   # or: fnm use
@@ -26,7 +31,8 @@ The tests use Node's built-in test runner, with jsdom to read the built page. Th
 - the build inlines everything GOV.UK Frontend's CSS needs, and fails on anything it doesn't know how to inline;
 - the committed `index.html` matches a fresh build of `src/`;
 - the page makes no other requests and only links to fragments, https and mailto;
-- its content is there in English and Welsh.
+- the translations are complete: the same keys in both languages, nothing left untranslated, and HTML only where it's allowed;
+- the page shows the copy from `translations.json` in English and Welsh, and no text that isn't from there.
 
 To move to a newer GOV.UK Frontend, update `govuk-frontend` in `package.json` and rebuild; the build fails if the CSS starts referencing an asset it doesn't know how to inline.
 
