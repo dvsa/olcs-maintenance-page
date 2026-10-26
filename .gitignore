@@ -1,1 +1,39 @@
+# index.html is the deployed build output and IS committed; don't ignore it.
+
+# Node
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.eslintcache
+.cache/
+coverage/
+*.tgz
+
+# Environment files can hold secrets; never commit them
+.env
+.env.*
+!.env.example
+
+# JetBrains (PhpStorm, WebStorm, IntelliJ): project settings are per-developer here
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# VS Code: keep shareable workspace config, ignore the rest
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.history/
+*.vsix
+
+# OS clutter
+.DS_Store
+._*
+Thumbs.db
