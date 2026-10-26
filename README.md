@@ -32,7 +32,10 @@ The tests use Node's built-in test runner, with jsdom to read the built page. Th
 - the committed `index.html` matches a fresh build of `src/`;
 - the page makes no other requests and only links to fragments, https and mailto;
 - the translations are complete: the same keys in both languages, nothing left untranslated, and HTML only where it's allowed;
-- the page shows the copy from `translations.json` in English and Welsh, and no text that isn't from there.
+- the page shows the copy from `translations.json` in English and Welsh, and no text that isn't from there;
+- axe-core finds no WCAG 2.2 A or AA violations in either language.
+
+The accessibility checks are a guard against regressions, not a sign-off. Automated tools only find some accessibility problems, and jsdom doesn't render, so axe can't judge anything visual such as colour contrast; `npm test` lists what it couldn't check. Changes to the page still need checking with a keyboard and a screen reader.
 
 To move to a newer GOV.UK Frontend, update `govuk-frontend` in `package.json` and rebuild; the build fails if the CSS starts referencing an asset it doesn't know how to inline.
 
