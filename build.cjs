@@ -15,9 +15,11 @@ const govukFile = (file, encoding) => fs.readFileSync(path.join(govuk, file), en
 
 /** Replaces `pattern` in `str`, failing unless it occurs exactly `count` times */
 const replaceExactly = (str, pattern, count, replacer) => {
-    const found = str.match(pattern) || [];
-    if (found.length !== count) {
-        throw new Error(`expected ${count} matches of ${pattern}, found ${found.length}`);
+    // Count every occurrence, even for a non-global pattern: str.match() would return its capture groups instead
+    const everywhere = new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g');
+    const found = [...str.matchAll(everywhere)].length;
+    if (found !== count) {
+        throw new Error(`expected ${count} matches of ${pattern}, found ${found}`);
     }
     return str.replace(pattern, replacer);
 };

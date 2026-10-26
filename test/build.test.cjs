@@ -30,6 +30,14 @@ test('replaceExactly throws when there are fewer or more matches than expected',
     assert.throws(() => replaceExactly('b', /a/g, 1, 'c'), /expected 1 matches of \/a\/g, found 0/);
 });
 
+test('replaceExactly counts every occurrence of a non-global pattern, not its capture groups', () => {
+    // String.prototype.match returns a non-global pattern's capture groups, not its occurrences
+    assert.equal(replaceExactly('a-b', /a(-)/, 1, (_, dash) => `x${dash}`), 'x-b');
+    // A non-global pattern only replaces the first occurrence, so a second one must fail rather than be left behind
+    assert.throws(() => replaceExactly('a-a-', /a(-)/, 1, 'c'), /expected 1 matches of \/a\(-\)\/, found 2/);
+    assert.throws(() => replaceExactly('a-a', /a/, 1, 'c'), /expected 1 matches of \/a\/, found 2/);
+});
+
 test('inlineCss drops @charset and the source map comment', () => {
     const css = inlineCss(fixtureCss(), fakeAsset);
     assert.doesNotMatch(css, /@charset|sourceMappingURL/);
