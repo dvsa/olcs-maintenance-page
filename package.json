@@ -2,6 +2,9 @@
   "name": "olcs-maintenance-page",
   "private": true,
   "description": "VOL maintenance page, built as a single self-contained index.html",
+  "engines": {
+    "node": "^26"
+  },
   "scripts": {
     "build": "node build.cjs"
   },

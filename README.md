@@ -8,9 +8,10 @@ English and Welsh content are both in the page; the Cymraeg/English link in the 
 
 ### Changing the page
 
-Don't edit `index.html` by hand. Edit `src/index.njk` and rebuild:
+Don't edit `index.html` by hand. Edit `src/index.njk` and rebuild. The build needs Node 26 (pinned in `.nvmrc`); `npm ci` refuses to run on any other major version:
 
 ```bash
+nvm use   # or: fnm use
 npm ci
 npm run build
 ```
