@@ -1,0 +1,36 @@
+{
+  "en": {
+    "languageName": "English",
+    "pageTitle": "Service unavailable – Vehicle Operator Licensing – GOV.UK",
+    "skipLink": "Skip to main content",
+    "serviceName": "Vehicle Operator Licensing",
+    "serviceNavigationLabel": "Service information",
+    "heading": "Service unavailable",
+    "subHeading": "We are carrying out routine maintenance and improvements.",
+    "useLater": "You will be able to use the service later.",
+    "contact": "If you see this page outside of times previously advertised please contact",
+    "contactEmail": "notifications@vehicle-operator-licensing.service.gov.uk",
+    "footer": {
+      "supportLinks": "Support links",
+      "licenceDescription": "All content is available under the <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"license\">Open Government Licence v3.0</a>, except where otherwise stated",
+      "copyright": "© Crown copyright"
+    }
+  },
+  "cy": {
+    "languageName": "Cymraeg",
+    "pageTitle": "Gwasanaeth ddim ar gael – Trwyddedu Gweithredu Cerbydau – GOV.UK",
+    "skipLink": "Neidio i'r prif gynnwys",
+    "serviceName": "Trwyddedu Gweithredu Cerbydau",
+    "serviceNavigationLabel": "Gwybodaeth am y gwasanaeth",
+    "heading": "Gwasanaeth ddim ar gael",
+    "subHeading": "Rydym yn cynnal gwaith cynnal a chadw a gwelliannau arferol.",
+    "useLater": "Byddwch yn gallu defnyddio'r gwasanaeth yn nes ymlaen.",
+    "contact": "Os gwelwch y dudalen hon y tu allan i weithiau a hysbysebwyd yn flaenorol, cysylltwch â",
+    "contactEmail": "notifications@vehicle-operator-licensing.service.gov.uk",
+    "footer": {
+      "supportLinks": "Dolenni cymorth",
+      "licenceDescription": "Mae'r holl gynnwys ar gael o dan y <a class=\"govuk-footer__link\" href=\"https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\" rel=\"license\" lang=\"en\">Open Government Licence v3.0</a>, ac eithrio lle nodir yn wahanol",
+      "copyright": "© Hawlfraint y Goron"
+    }
+  }
+}

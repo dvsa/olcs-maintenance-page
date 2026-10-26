@@ -9,6 +9,7 @@ const govukDist = path.join(path.dirname(require.resolve('govuk-frontend/package
 const govuk = path.join(govukDist, 'govuk');
 const version = require('govuk-frontend/package.json').version;
 const defaultOutFile = path.join(__dirname, 'index.html');
+const translations = require('./src/data/translations.json');
 
 /** Reads a file from govuk-frontend's dist/govuk folder (a Buffer unless an encoding is given) */
 const govukFile = (file, encoding) => fs.readFileSync(path.join(govuk, file), encoding);
@@ -70,7 +71,12 @@ const createTranslator = (copy) => (lang, key) => {
 
 /** Renders the page as a string */
 const render = () => {
-    const env = nunjucks.configure([path.join(__dirname, 'src'), govukDist], { autoescape: true, throwOnUndefined: true });
+    const env = new nunjucks.Environment(new nunjucks.FileSystemLoader([path.join(__dirname, 'src'), govukDist]), {
+        autoescape: true,
+        throwOnUndefined: true,
+    });
+    // A global, not render context, because macros can't see the render context
+    env.addGlobal('t', createTranslator(translations));
     return env
         .render('index.njk', {
             css: inlineCss(govukFile('govuk-frontend.min.css', 'utf8')),
