@@ -3,7 +3,7 @@
 // so they hold however the language switch is built.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { html, loadPage, text, langOf } = require('../helpers/page.cjs');
+const { loadPage, text, langOf } = require('../helpers/page.cjs');
 const translations = require('../../src/data/translations.json');
 const { createTranslator } = require('../../build.cjs');
 
@@ -89,7 +89,11 @@ test('all the copy comes from translations.json', () => {
 });
 
 test('has no unrendered template syntax', () => {
-    // Minified CSS legitimately contains "}}", so check the markup only
-    const markup = html.replace(/<(style|script)\b[^>]*>[\s\S]*?<\/\1>/g, '');
-    assert.doesNotMatch(markup, /\{\{|\}\}|\{%|%\}|\{#|#\}/);
+    // Minified CSS legitimately contains "}}", so check the markup only: take the <style> and <script> elements
+    // out of a fresh parse of the page, rather than cutting them out of the HTML with a regex
+    const markup = loadPage().window.document;
+    for (const el of markup.querySelectorAll('style, script')) {
+        el.remove();
+    }
+    assert.doesNotMatch(markup.documentElement.outerHTML, /\{\{|\}\}|\{%|%\}|\{#|#\}/);
 });

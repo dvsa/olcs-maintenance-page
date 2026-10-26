@@ -18,4 +18,4 @@ const text = (el) => el.textContent.replace(/\s+/g, ' ').trim();
 /** The language an element is in: the nearest lang attribute, up to and including <html> */
 const langOf = (el) => el.closest('[lang]')?.getAttribute('lang');
 
-module.exports = { html, loadPage, text, langOf };
+module.exports = { loadPage, text, langOf };
