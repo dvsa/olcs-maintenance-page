@@ -1,4 +1,5 @@
-// Automated accessibility checks with axe-core, against the WCAG 2.2 A and AA rules, in each language.
+// Automated accessibility checks with axe-core, in each language, against WCAG 2.2 AA: the standard the GDS Way
+// sets for government services (https://gds-way.digital.cabinet-office.gov.uk/manuals/accessibility.html).
 // jsdom doesn't render, so axe can't judge anything visual, such as colour contrast: it reports those as
 // incomplete, and these tests list them rather than treat them as passed. Automated checks only find some
 // accessibility problems; they guard against regressions, and don't replace testing with assistive technology.
@@ -8,7 +9,16 @@ const axe = require('axe-core');
 const { VirtualConsole } = require('jsdom');
 const { loadPage } = require('./helpers/page.cjs');
 
+// WCAG 2.2 AA means every Level A and AA success criterion from WCAG 2.0, 2.1 and 2.2. axe tags its rules by
+// the version and level that introduced them; it has no wcag22a tag, as none of 2.2's new A criteria can be
+// automated. The test below fails if a newer axe adds one, so an upgrade can't quietly skip rules.
 const wcag22aa = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+
+test('runs every axe rule for WCAG 2.2 A and AA, and none for AAA', () => {
+    const levelTags = new Set(axe.getRules().flatMap((rule) => rule.tags.filter((tag) => /^wcag2[0-2]?a{1,3}$/.test(tag))));
+    const required = [...levelTags].filter((tag) => !tag.endsWith('aaa')).sort();
+    assert.deepEqual(required, [...wcag22aa].sort());
+});
 
 /**
  * Runs axe against the page at `url`. `runPageScripts` runs the page's own script first, as a browser would,
