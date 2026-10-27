@@ -15,33 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # The shared workflow defaults to the latest Node, which engine-strict would refuse; use .nvmrc's instead,
-  # so the version lives in one place
-  node-version:
-    name: Node version
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      version: ${{ steps.nvmrc.outputs.version }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-          sparse-checkout: .nvmrc
-          sparse-checkout-cone-mode: false
-      - id: nvmrc
-        name: Read .nvmrc
-        run: |
-          version=$(tr -d '[:space:]' < .nvmrc)
-          if ! [[ "$version" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]]; then
-            echo "::error file=.nvmrc::expected a Node version such as 26, found: $version"
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-
   test:
     name: 'Test: ${{ matrix.name }}'
-    needs: node-version
     strategy:
       # Report every suite, not just the first to fail
       fail-fast: false
@@ -50,8 +25,8 @@ jobs:
           - { suite: build, name: Build }
           - { suite: content, name: Content }
           - { suite: accessibility, name: Accessibility }
-    # Pinned to a commit, not the v6 tag, which dvsa/.github's releases move
-    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@1ed2aa439986ee10c92217744caf9f77705f5362 # v6.2.0
+    # Pinned to a commit, not the v7 tag, which dvsa/.github's releases move. With no node-version given, v7
+    # installs the version in .nvmrc, so it lives in one place and engine-strict accepts it
+    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@fa509b159d1f679b657a906673b3cf75518a7c07 # v7.0.0
     with:
-      node-version: ${{ needs.node-version.outputs.version }}
       test-command: npm run test:${{ matrix.suite }}
