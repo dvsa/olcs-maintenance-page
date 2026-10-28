@@ -25,14 +25,14 @@
   <body class="govuk-template__body">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
-  <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><span data-app-lang="en">Skip to main content</span><span data-app-lang="cy" hidden>Neidio i'r prif gynnwys</span></a>
+  <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><span data-app-lang="en">Skip to main content</span><span data-app-lang="cy" hidden>Neidio i&#39;r prif gynnwys</span></a>
 
         <header class="govuk-template__header">
 
 <div class="govuk-header">
   <div class="govuk-header__container govuk-width-container">
     <div class="govuk-header__logo">
-      <a href="//gov.uk" class="govuk-header__homepage-link">
+      <a href="https://www.gov.uk" class="govuk-header__homepage-link">
 
           <svg
             focusable="false"
@@ -103,7 +103,7 @@ data-module="govuk-service-navigation"
       <div data-app-lang="cy" lang="cy" hidden>
         <h1 class="govuk-heading-xl">Gwasanaeth ddim ar gael</h1>
         <p class="govuk-body-l">Rydym yn cynnal gwaith cynnal a chadw a gwelliannau arferol.</p>
-        <p class="govuk-body">Byddwch yn gallu defnyddio'r gwasanaeth yn nes ymlaen.</p>
+        <p class="govuk-body">Byddwch yn gallu defnyddio&#39;r gwasanaeth yn nes ymlaen.</p>
         <p class="govuk-body">Os gwelwch y dudalen hon y tu allan i weithiau a hysbysebwyd yn flaenorol, cysylltwch â <a class="govuk-link" href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a></p>
       </div>
     </div>
@@ -206,14 +206,14 @@ data-module="govuk-service-navigation"
       }
 
       document.documentElement.lang = 'cy';
-      document.title = 'Gwasanaeth ddim ar gael – Trwyddedu Gweithredu Cerbydau – GOV.UK';
-      document.querySelector('.govuk-service-navigation').setAttribute('aria-label', 'Gwybodaeth am y gwasanaeth');
+      document.title = "Gwasanaeth ddim ar gael – Trwyddedu Gweithredu Cerbydau – GOV.UK";
+      document.querySelector('.govuk-service-navigation').setAttribute('aria-label', "Gwybodaeth am y gwasanaeth");
       var parts = document.querySelectorAll('[data-app-lang]');
       for (var i = 0; i < parts.length; i++) {
         parts[i].hidden = parts[i].getAttribute('data-app-lang') !== 'cy';
       }
       var toggle = document.querySelector('[data-app-lang-toggle]');
-      toggle.textContent = 'English';
+      toggle.textContent = "English";
       toggle.href = '?lang=en';
       toggle.lang = toggle.hreflang = 'en';
     })();

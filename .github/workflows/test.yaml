@@ -1,0 +1,32 @@
+# Runs each test suite (npm run test:<suite>) as its own check, so a reviewer can see at a glance which one
+# failed. Other workflows call this one too (workflow_call), so the same tests gate whatever they do next.
+name: Test
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  # A new push to a PR cancels its earlier run; a call from another workflow gets a group of its own
+  group: test-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: 'Test: ${{ matrix.name }}'
+    strategy:
+      # Report every suite, not just the first to fail
+      fail-fast: false
+      matrix:
+        include:
+          - { suite: build, name: Build }
+          - { suite: content, name: Content }
+          - { suite: accessibility, name: Accessibility }
+    # Pinned to a commit, not the v7 tag, which dvsa/.github's releases move. With no node-version given, v7
+    # installs the version in .nvmrc, so it lives in one place and engine-strict accepts it
+    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@fa509b159d1f679b657a906673b3cf75518a7c07 # v7.0.0
+    with:
+      test-command: npm run test:${{ matrix.suite }}
