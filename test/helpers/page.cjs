@@ -1,10 +1,9 @@
-// Shared helpers for the tests that check the built page: the committed index.html, which the build test
-// keeps in step with src/
-const fs = require('node:fs');
+// Shared helpers for the tests that check the built page. The page is rendered in memory, the same way
+// npm run build renders it (the build test checks that), so the tests need no build first
 const { JSDOM } = require('jsdom');
-const { defaultOutFile } = require('../../build.cjs');
+const { render } = require('../../build.cjs');
 
-const html = fs.readFileSync(defaultOutFile, 'utf8');
+const html = render();
 
 /**
  * Parses the page into a fresh DOM, so tests can't leak state into each other.

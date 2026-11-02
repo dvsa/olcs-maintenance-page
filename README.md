@@ -2,13 +2,13 @@
 
 This page is served via imperva when routine maintenance and upgrades are carried out on a live release.
 
-`index.html` is the page that gets deployed. It is a single self-contained file: the GOV.UK Frontend CSS, the GDS Transport fonts and the crest are all inlined, because the page is served on its own and any other file it asked for would come back as the page itself.
+The page that gets deployed is `dist/index.html`, which CI builds from `src/`. It is a single self-contained file: the GOV.UK Frontend CSS, the GDS Transport fonts and the crest are all inlined, because the page is served on its own and any other file it asked for would come back as the page itself.
 
 English and Welsh content are both in the page; the Cymraeg/English link in the footer switches between them (`?lang=cy` / `?lang=en`, remembered for the browser session).
 
 ### Changing the page
 
-Don't edit `index.html` by hand. Edit the source and rebuild:
+The page is built from its source, so edit that:
 
 - **Wording:** `src/data/translations.json`. Every string on the page is there, in English (`en`) and Welsh (`cy`), with the same keys in each. Only `footer.licenceDescription` may contain HTML.
 - **Layout:** `src/index.njk`. It extends GOV.UK Frontend's page template and looks all its copy up with `t(lang, key)`, so it has no text of its own. A missing key fails the build.
@@ -21,7 +21,9 @@ npm ci
 npm run build
 ```
 
-Commit the rebuilt `index.html` with the template change, then run the tests:
+That writes `dist/index.html`, for previewing in a browser. It isn't committed: on every pull request and every push to `main`, GitHub Actions (`.github/workflows/ci.yaml`) runs the tests, then builds the page and uploads it as an artefact named `maintenance-page`, which you can download from the run's summary page.
+
+The tests don't need a build first:
 
 ```bash
 npm test                         # every suite
@@ -30,9 +32,9 @@ npm run test:content
 npm run test:accessibility
 ```
 
-The tests use Node's built-in test runner, with jsdom to read the built page. They're in three suites, one directory each under `test/`. On every pull request, GitHub Actions runs each suite as its own check (Test: Build, Test: Content, Test: Accessibility, from `.github/workflows/test.yaml`), so you can see at a glance which one failed:
+The tests use Node's built-in test runner, with jsdom to read the built page. They're in three suites, one directory each under `test/`. CI runs each suite as its own check (Test: Build, Test: Content, Test: Accessibility, from `.github/workflows/test.yaml`), so you can see at a glance which one failed. The page is only built if they all pass:
 
-- **Build** (`test/build/`): the build inlines everything GOV.UK Frontend's CSS needs, and fails on anything it doesn't know how to inline; the committed `index.html` matches a fresh build of `src/`; the page makes no other requests and only links to fragments, https and mailto.
+- **Build** (`test/build/`): the build inlines everything GOV.UK Frontend's CSS needs, and fails on anything it doesn't know how to inline; the page makes no other requests and only links to fragments, https and mailto.
 - **Content** (`test/content/`): the translations are complete, with the same keys in both languages, nothing left untranslated, and HTML only where it's allowed; the page shows the copy from `translations.json` in English and Welsh, and no text that isn't from there.
 - **Accessibility** (`test/accessibility/`): axe-core finds no WCAG 2.2 A or AA violations in either language (see [Accessibility](#accessibility)).
 
