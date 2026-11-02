@@ -1,0 +1,33 @@
+# Tests every pull request and every push to main, then builds the page and uploads it as an artefact, so what gets
+# deployed is built by CI from a tested commit rather than committed by hand.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # A new push to a PR cancels its earlier run; runs on main always finish, as they'll be what gets deployed
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
+  build:
+    name: Build
+    needs: test
+    # Pinned to a commit, not the v7 tag, which dvsa/.github's releases move. With no node-version given, v7
+    # installs the version in .nvmrc
+    uses: dvsa/.github/.github/workflows/nodejs-build.yaml@fa509b159d1f679b657a906673b3cf75518a7c07 # v7.0.0
+    with:
+      build-command: npm run build
+      upload-artifact: true
+      # The artefact's name; build-folder-path is what goes in it
+      build-folder: maintenance-page
+      build-folder-path: dist

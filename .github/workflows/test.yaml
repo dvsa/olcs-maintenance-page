@@ -1,18 +1,12 @@
 # Runs each test suite (npm run test:<suite>) as its own check, so a reviewer can see at a glance which one
-# failed. Other workflows call this one too (workflow_call), so the same tests gate whatever they do next.
+# failed. It's called from ci.yaml, so the same tests gate the build, and later the deploys.
 name: Test
 
 on:
-  pull_request:
   workflow_call:
 
 permissions:
   contents: read
-
-concurrency:
-  # A new push to a PR cancels its earlier run; a call from another workflow gets a group of its own
-  group: test-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: true
 
 jobs:
   test:
