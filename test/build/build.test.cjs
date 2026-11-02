@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { replaceExactly, inlineCss, govukFile, render, build, defaultOutFile } = require('../../build.cjs');
+const { replaceExactly, inlineCss, govukFile, render, build } = require('../../build.cjs');
 
 /** Stands in for govuk-frontend's assets: each file's content is its own path, so the data URIs are predictable */
 const fakeAsset = (file) => Buffer.from(file);
@@ -78,16 +78,11 @@ test('inlineCss leaves nothing external in the real govuk-frontend CSS', () => {
     assert.equal(css.match(/url\(data:font\/woff2;base64,/g).length, 2);
 });
 
-test('the committed index.html is up to date with src/', () => {
-    // index.html is what gets deployed, so a template change must be committed with its rebuilt page.
-    // assert.ok, not assert.equal, so a failure gives the fix rather than a diff of two 280KB strings.
-    assert.ok(fs.readFileSync(defaultOutFile, 'utf8') === render(), 'index.html is out of date: run npm run build and commit it');
-});
-
-test('build writes the rendered page to the given file', () => {
+test('build writes the rendered page to the given file, creating its directory', () => {
     const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'maintenance-page-build-'));
     try {
-        const outFile = path.join(outDir, 'index.html');
+        // dist/ isn't committed, so on a fresh clone the build has to create it
+        const outFile = path.join(outDir, 'dist', 'index.html');
         const html = build(outFile);
         assert.equal(fs.readFileSync(outFile, 'utf8'), html);
         assert.equal(html, render());

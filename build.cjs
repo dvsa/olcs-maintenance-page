@@ -1,4 +1,4 @@
-// Builds index.html from src/index.njk with GOV.UK Frontend's page template, inlining every asset the CSS needs:
+// Builds dist/index.html from src/index.njk with GOV.UK Frontend's page template, inlining every asset the CSS needs:
 // the page is served on its own, so any other file it asked for would come back as this page.
 // Run it directly (npm run build); the tests require it for its functions.
 const fs = require('fs');
@@ -8,7 +8,8 @@ const nunjucks = require('nunjucks');
 const govukDist = path.join(path.dirname(require.resolve('govuk-frontend/package.json')), 'dist');
 const govuk = path.join(govukDist, 'govuk');
 const version = require('govuk-frontend/package.json').version;
-const defaultOutFile = path.join(__dirname, 'index.html');
+// Build output isn't committed: CI builds it and uploads it as an artefact
+const defaultOutFile = path.join(__dirname, 'dist', 'index.html');
 const translations = require('./src/data/translations.json');
 
 /** Reads a file from govuk-frontend's dist/govuk folder (a Buffer unless an encoding is given) */
@@ -90,6 +91,7 @@ const render = () => {
 /** Writes the rendered page to `outFile` and returns it */
 const build = (outFile = defaultOutFile) => {
     const html = render();
+    fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, html);
     return html;
 };

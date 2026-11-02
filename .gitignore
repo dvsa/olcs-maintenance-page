@@ -1,4 +1,5 @@
-# index.html is the deployed build output and IS committed; don't ignore it.
+# Build output (npm run build); CI builds the page and uploads it as an artefact, so it's never committed
+dist/
 
 # Node
 node_modules/
