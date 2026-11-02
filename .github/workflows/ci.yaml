@@ -6,6 +6,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Rebuild on demand, e.g. when the last artefact has expired
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,6 +24,9 @@ jobs:
   build:
     name: Build
     needs: test
+    # A manual run can pick any branch; only build main's, so an artefact from one is always deployable. On
+    # another branch a manual run just runs the tests
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
     # Pinned to a commit, not the v7 tag, which dvsa/.github's releases move. With no node-version given, v7
     # installs the version in .nvmrc
     uses: dvsa/.github/.github/workflows/nodejs-build.yaml@fa509b159d1f679b657a906673b3cf75518a7c07 # v7.0.0
