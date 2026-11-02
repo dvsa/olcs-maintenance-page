@@ -1,0 +1,40 @@
+# Dependabot opens the pull requests that start the release cycle: a bump is tested by CI, merged, deployed to
+# NonProd, then released to Prod. The commit prefixes decide what release-please releases.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      # Daily, so a new GOV.UK Frontend is proposed the day its cooldown ends; at the start of the working day
+      interval: daily
+      time: '07:00'
+      timezone: Europe/London
+    # Only propose a release once it's a week old: compromised npm releases are usually found and pulled within
+    # days, and quick follow-up patches have settled. Security updates aren't held back by this
+    cooldown:
+      default-days: 7
+    commit-message:
+      # govuk-frontend is the only dependency: it ships in the page, so its bumps are fixes that release-please
+      # releases. devDependencies only change how we build and test, so they don't release anything
+      prefix: fix
+      prefix-development: chore
+      include: scope
+    groups:
+      # One pull request for all the build and test tools; govuk-frontend always gets its own
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      # Weekly is plenty for actions; it keeps the commit SHAs they're pinned to current
+      interval: weekly
+      time: '07:00'
+      timezone: Europe/London
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ['*']
