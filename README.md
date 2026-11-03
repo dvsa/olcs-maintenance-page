@@ -1,5 +1,7 @@
 ## VOL Maintenance Page
 
+[![CI](https://github.com/dvsa/olcs-maintenance-page/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/dvsa/olcs-maintenance-page/actions/workflows/ci.yaml?query=branch%3Amain)
+
 This page is served via imperva when routine maintenance and upgrades are carried out on a live release.
 
 The page that gets deployed is `dist/index.html`, which CI builds from `src/`. It is a single self-contained file: the GOV.UK Frontend CSS, the GDS Transport fonts and the crest are all inlined, because the page is served on its own and any other file it asked for would come back as the page itself.
