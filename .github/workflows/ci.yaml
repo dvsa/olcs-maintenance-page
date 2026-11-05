@@ -36,3 +36,6 @@ jobs:
       # The artefact's name; build-folder-path is what goes in it
       build-folder: maintenance-page
       build-folder-path: dist
+      # main's artefacts are what gets deployed, so keep them as long as the repo allows (30 days); a PR's are only
+      # for a look before merging. Without this, nodejs-build's default of 3 days overrides the repo setting
+      retention-days: ${{ github.ref == 'refs/heads/main' && 30 || 3 }}

@@ -1,5 +1,7 @@
 ## VOL Maintenance Page
 
+[![CI](https://github.com/dvsa/olcs-maintenance-page/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/dvsa/olcs-maintenance-page/actions/workflows/ci.yaml?query=branch%3Amain)
+
 This page is served via imperva when routine maintenance and upgrades are carried out on a live release.
 
 The page that gets deployed is `dist/index.html`, which CI builds from `src/`. It is a single self-contained file: the GOV.UK Frontend CSS, the GDS Transport fonts and the crest are all inlined, because the page is served on its own and any other file it asked for would come back as the page itself.
@@ -40,7 +42,19 @@ The tests use Node's built-in test runner, with jsdom to read the built page. Th
 
 A new test file goes in the directory of the suite it belongs to. A test file anywhere else fails the build suite, because a CI check per suite would never run it.
 
-To move to a newer GOV.UK Frontend, update `govuk-frontend` in `package.json` and rebuild; the build fails if the CSS starts referencing an asset it doesn't know how to inline.
+### Keeping dependencies up to date
+
+Dependabot (`.github/dependabot.yml`) opens pull requests for new versions: npm every morning at 07:00 and GitHub Actions on Mondays, London time. It only proposes a version once it's been out for 7 days. That gives the npm registry time to pull a compromised release and lets quick follow-up patches settle. Security fixes aren't held back: Dependabot opens those as soon as an advisory is published.
+
+The commit type says whether a bump changes the page:
+
+- **`fix(deps)`:** `govuk-frontend`, the only entry in `dependencies`, because its CSS, fonts and crest are inlined into the page. Each version gets its own pull request.
+- **`chore(deps-dev)`:** the build and test tools in `devDependencies`, in one grouped pull request. They don't change what users see.
+- **`ci`:** GitHub Actions, in one grouped pull request.
+
+That split is deliberate. Releases will be cut from `fix` and `feat` commits, so a GOV.UK Frontend bump gets released and a tooling bump doesn't. A new package that ends up in the page belongs in `dependencies`; anything only used to build or test it belongs in `devDependencies`.
+
+To upgrade GOV.UK Frontend by hand, update `govuk-frontend` in `package.json` and rebuild. The build fails if its CSS starts referencing an asset it doesn't know how to inline.
 
 ### Accessibility
 
