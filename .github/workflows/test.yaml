@@ -21,6 +21,6 @@ jobs:
           - { suite: accessibility, name: Accessibility }
     # Pinned to a commit, not the v7 tag, which dvsa/.github's releases move. With no node-version given, v7
     # installs the version in .nvmrc, so it lives in one place and engine-strict accepts it
-    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@fa509b159d1f679b657a906673b3cf75518a7c07 # v7.0.0
+    uses: dvsa/.github/.github/workflows/nodejs-test.yaml@84ca942b5f8b7eccabf84f98194bb46f31e5ceff # v7.1.0
     with:
       test-command: npm run test:${{ matrix.suite }}
